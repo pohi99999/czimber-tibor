@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Cimbi Brand Design Tokens */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colours */
+  --color-walnut: #3d2b1f;
+  --color-walnut-light: #5a3e2b;
+  --color-oak: #8b6914;
+  --color-spotlight: #d4a853;
+  --color-birch: #e8dcc8;
+  --color-linen: #f5f0e8;
+  --color-stage: #1a1410;
+  --color-stone: #6b5e52;
+  --color-smoke: #2c2420;
+  --color-smoke-light: #3d332d;
+
+  /* Typography */
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-stage);
+  color: var(--color-birch);
+  font-family: var(--font-body), 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-stage); }
+::-webkit-scrollbar-thumb { background: var(--color-walnut); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-oak); }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--color-spotlight);
+  outline-offset: 2px;
+}
+
