@@ -45,7 +45,12 @@ function Lightbox({
       if (e.key === 'ArrowRight') next();
     };
     window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    // Prevent body scroll while lightbox is open
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handler);
+      document.body.style.overflow = '';
+    };
   }, [onClose, prev, next]);
 
   return (
@@ -55,16 +60,17 @@ function Lightbox({
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+      <div className="relative flex items-center justify-center w-full px-14 sm:px-0" onClick={(e) => e.stopPropagation()}>
         {/* Image */}
         <img
           src={`/${images[current]}`}
           alt={`Gallery image ${current + 1} of ${images.length}`}
-          className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl"
+          loading="lazy"
+          className="max-w-[90vw] max-h-[80vh] sm:max-h-[85vh] object-contain rounded-lg shadow-2xl"
         />
 
         {/* Counter */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/60 text-sm bg-black/50 px-3 py-1 rounded-full">
+        <div className="absolute top-2 sm:top-4 left-1/2 -translate-x-1/2 text-white/60 text-xs sm:text-sm bg-black/50 px-3 py-1 rounded-full whitespace-nowrap">
           {current + 1} / {images.length}
         </div>
 
@@ -72,19 +78,19 @@ function Lightbox({
         <button
           onClick={onClose}
           aria-label={labelClose}
-          className="absolute -top-4 -right-4 bg-[var(--color-walnut)] text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--color-spotlight)] hover:text-[var(--color-stage)] transition-colors duration-200"
+          className="absolute top-2 right-2 sm:-top-4 sm:-right-4 bg-[var(--color-walnut)] text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--color-spotlight)] hover:text-[var(--color-stage)] transition-colors duration-200"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {/* Prev */}
+        {/* Prev – anchored to left edge of px-14 area on mobile, outside image on desktop */}
         {images.length > 1 && (
           <button
             onClick={prev}
             aria-label={labelPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--color-spotlight)] hover:text-[var(--color-stage)] transition-colors duration-200"
+            className="absolute left-0 sm:-left-14 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--color-spotlight)] hover:text-[var(--color-stage)] transition-colors duration-200"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -97,7 +103,7 @@ function Lightbox({
           <button
             onClick={next}
             aria-label={labelNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--color-spotlight)] hover:text-[var(--color-stage)] transition-colors duration-200"
+            className="absolute right-0 sm:-right-14 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--color-spotlight)] hover:text-[var(--color-stage)] transition-colors duration-200"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

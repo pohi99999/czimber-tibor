@@ -73,7 +73,7 @@ function TypeButton({
     <button
       type="button"
       onClick={onClick}
-      className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all duration-200 ${
+      className={`px-4 py-3.5 rounded-lg border text-sm font-medium transition-all duration-200 min-h-[44px] ${
         selected
           ? 'border-[var(--color-spotlight)] bg-[var(--color-spotlight)]/20 text-[var(--color-spotlight)]'
           : 'border-[var(--color-walnut)]/40 text-[var(--color-birch)]/70 hover:border-[var(--color-spotlight)]/40 hover:text-[var(--color-birch)]'
@@ -89,22 +89,24 @@ function RadioGroup({
   options,
   value,
   onChange,
+  cols2 = false,
 }: {
   label: string;
   options: { value: string; label: string }[];
   value: string;
   onChange: (v: string) => void;
+  cols2?: boolean;
 }) {
   return (
     <div>
       <p className="text-[var(--color-birch)]/80 text-sm font-medium mb-3">{label}</p>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className={`grid gap-3 ${cols2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'}`}>
         {options.map((opt) => (
           <button
             key={opt.value}
             type="button"
             onClick={() => onChange(opt.value)}
-            className={`px-4 py-3 rounded-lg border text-sm transition-all duration-200 ${
+            className={`px-4 py-3.5 rounded-lg border text-sm transition-all duration-200 min-h-[44px] ${
               value === opt.value
                 ? 'border-[var(--color-spotlight)] bg-[var(--color-spotlight)]/20 text-[var(--color-spotlight)]'
                 : 'border-[var(--color-walnut)]/40 text-[var(--color-birch)]/70 hover:border-[var(--color-spotlight)]/40'
@@ -302,6 +304,7 @@ export default function QuoteForm() {
                     options={budgetOptions}
                     value={form.budget}
                     onChange={(v) => setForm((f) => ({ ...f, budget: v as Budget }))}
+                    cols2
                   />
                 </div>
               )}
@@ -359,7 +362,7 @@ export default function QuoteForm() {
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="px-6 py-3 border border-[var(--color-walnut)]/40 text-[var(--color-birch)]/70 rounded-lg hover:bg-[var(--color-walnut)]/20 transition-colors duration-200 text-sm"
+                    className="px-6 py-3.5 min-h-[44px] border border-[var(--color-walnut)]/40 text-[var(--color-birch)]/70 rounded-lg hover:bg-[var(--color-walnut)]/20 transition-colors duration-200 text-sm"
                   >
                     {t('back')}
                   </button>
@@ -371,7 +374,7 @@ export default function QuoteForm() {
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="px-6 py-3 bg-[var(--color-spotlight)] text-[var(--color-stage)] font-semibold rounded-lg hover:bg-[var(--color-oak)] transition-colors duration-200 text-sm"
+                    className="px-6 py-3.5 min-h-[44px] bg-[var(--color-spotlight)] text-[var(--color-stage)] font-semibold rounded-lg hover:bg-[var(--color-oak)] transition-colors duration-200 text-sm"
                   >
                     {t('next')}
                   </button>
@@ -379,7 +382,7 @@ export default function QuoteForm() {
                   <button
                     type="submit"
                     disabled={status === 'submitting' || form.description.trim().length < 50}
-                    className="px-8 py-3 bg-[var(--color-spotlight)] text-[var(--color-stage)] font-bold rounded-lg hover:bg-[var(--color-oak)] transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-8 py-3.5 min-h-[44px] bg-[var(--color-spotlight)] text-[var(--color-stage)] font-bold rounded-lg hover:bg-[var(--color-oak)] transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === 'submitting' ? t('submitting') : t('submit')}
                   </button>

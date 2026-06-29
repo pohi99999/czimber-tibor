@@ -25,6 +25,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Offset for fixed navbar so anchors don't hide under it */
+  scroll-padding-top: 6rem;
 }
 
 body {

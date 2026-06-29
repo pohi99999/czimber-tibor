@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { routing } from '@/i18n/routing';
@@ -10,10 +9,10 @@ import { routing } from '@/i18n/routing';
 type Locale = (typeof routing.locales)[number];
 
 function localeHref(pathname: string, newLocale: Locale, currentLocale: Locale): string {
-  // Strip existing locale prefix if present
-  const stripped = currentLocale !== routing.defaultLocale
-    ? pathname.replace(`/${currentLocale}`, '') || '/'
-    : pathname;
+  const stripped =
+    currentLocale !== routing.defaultLocale
+      ? pathname.replace(`/${currentLocale}`, '') || '/'
+      : pathname;
   return newLocale === routing.defaultLocale ? stripped : `/${newLocale}${stripped}`;
 }
 
@@ -30,9 +29,9 @@ export default function Navbar({ locale }: { locale: Locale }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // #about and #story both resolve to TheatreOriginStory – merged into one entry
   const navLinks = [
-    { href: '#about', label: t('about') },
-    { href: '#story', label: t('story') },
+    { href: '#story', label: t('about') },
     { href: '#services', label: t('services') },
     { href: '#references', label: t('references') },
     { href: '#quote', label: t('quote') },
@@ -54,7 +53,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
       }`}
     >
       <div className="container mx-auto px-6">
-        {/* Top row: Logo + mobile toggle */}
+        {/* Top row: Logo + desktop lang switcher + mobile hamburger */}
         <div className="flex items-center justify-between py-4">
           <a href="#home" className="flex items-center gap-3 group flex-shrink-0">
             <Image
@@ -69,9 +68,9 @@ export default function Navbar({ locale }: { locale: Locale }) {
             </span>
           </a>
 
-          {/* Language switcher (desktop, top-right) */}
-          <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-black/30 px-3 py-1.5 rounded-md">
+          <div className="flex items-center gap-3">
+            {/* Language switcher – desktop only */}
+            <div className="hidden md:flex items-center gap-2 bg-black/30 px-3 py-1.5 rounded-md">
               {locales.map(({ code, label }, i) => (
                 <span key={code} className="flex items-center gap-2">
                   {i > 0 && <span className="text-[var(--color-stone)]">|</span>}
@@ -90,11 +89,12 @@ export default function Navbar({ locale }: { locale: Locale }) {
               ))}
             </div>
 
-            {/* Mobile menu button */}
+            {/* Hamburger – mobile only (single instance) */}
             <button
-              className="md:hidden text-white p-2 focus:outline-none"
+              className="md:hidden text-white p-2 focus:outline-none min-w-[44px] min-h-[44px] flex items-center justify-center"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {menuOpen ? (
@@ -105,21 +105,6 @@ export default function Navbar({ locale }: { locale: Locale }) {
               </svg>
             </button>
           </div>
-
-          {/* Mobile menu button (separate, visible on mobile) */}
-          <button
-            className="md:hidden text-white p-2 focus:outline-none"
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label="Toggle menu"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              )}
-            </svg>
-          </button>
         </div>
 
         {/* Desktop nav links */}
@@ -138,7 +123,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
         </nav>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile dropdown menu */}
       {menuOpen && (
         <div className="md:hidden bg-[var(--color-smoke)]/98 backdrop-blur-md border-t border-white/10">
           <div className="container mx-auto px-6 py-4 space-y-1">
@@ -147,19 +132,25 @@ export default function Navbar({ locale }: { locale: Locale }) {
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="block text-center py-3 text-sm uppercase tracking-wider text-[var(--color-birch)]/80 hover:text-white transition-colors duration-200"
+                className="block text-center py-3 text-sm uppercase tracking-wider text-[var(--color-birch)]/80 hover:text-white transition-colors duration-200 min-h-[44px] flex items-center justify-center"
               >
                 {label}
               </a>
             ))}
+            {/* Language switcher in mobile menu */}
             <div className="flex items-center justify-center gap-4 pt-4 border-t border-white/10 mt-4">
               {locales.map(({ code, label }, i) => (
                 <span key={code} className="flex items-center gap-4">
                   {i > 0 && <span className="text-[var(--color-stone)]">|</span>}
                   <button
-                    onClick={() => { router.push(localeHref(pathname, code, locale)); setMenuOpen(false); }}
-                    className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-200 ${
-                      locale === code ? 'text-[var(--color-spotlight)]' : 'text-[var(--color-stone)] hover:text-white'
+                    onClick={() => {
+                      router.push(localeHref(pathname, code, locale));
+                      setMenuOpen(false);
+                    }}
+                    className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-200 min-h-[44px] px-2 ${
+                      locale === code
+                        ? 'text-[var(--color-spotlight)]'
+                        : 'text-[var(--color-stone)] hover:text-white'
                     }`}
                   >
                     {label}

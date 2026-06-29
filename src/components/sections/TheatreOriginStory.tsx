@@ -3,14 +3,14 @@ import Image from 'next/image';
 
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
-    <div className="text-center p-6 border border-[var(--color-walnut)]/50 rounded-xl bg-[var(--color-walnut)]/20">
+    <div className="text-center p-3 sm:p-6 border border-[var(--color-walnut)]/50 rounded-xl bg-[var(--color-walnut)]/20">
       <div
-        className="text-4xl font-bold text-[var(--color-spotlight)] mb-2"
+        className="text-2xl sm:text-4xl font-bold text-[var(--color-spotlight)] mb-1 sm:mb-2"
         style={{ fontFamily: 'var(--font-display)' }}
       >
         {value}
       </div>
-      <div className="text-sm text-[var(--color-birch)]/70 uppercase tracking-wider">{label}</div>
+      <div className="text-[10px] sm:text-sm text-[var(--color-birch)]/70 uppercase tracking-wider leading-tight">{label}</div>
     </div>
   );
 }

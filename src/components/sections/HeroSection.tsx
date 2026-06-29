@@ -1,5 +1,4 @@
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
@@ -23,49 +22,49 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-[var(--color-stage)]/70 via-[var(--color-stage)]/50 to-[var(--color-stage)]/80" />
 
       {/* Content */}
-      <div className="relative z-20 px-4 max-w-4xl mx-auto">
+      <div className="relative z-20 px-6 max-w-4xl mx-auto w-full">
         {/* Theatrical tagline */}
-        <p className="text-[var(--color-spotlight)]/80 text-sm md:text-base uppercase tracking-[0.3em] mb-6 font-light italic">
+        <p className="text-[var(--color-spotlight)]/80 text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-4 sm:mb-6 font-light italic">
           {t('tagline')} {t('tagline2')}
         </p>
 
+        {/* Single h1 for SEO – spans two visual lines via nested spans */}
         <h1
-          className="text-5xl md:text-7xl font-bold text-white leading-tight mb-2"
+          className="font-bold text-white leading-tight mb-6"
           style={{ fontFamily: 'var(--font-display)' }}
         >
-          {t('title')}
-        </h1>
-        <h1
-          className="text-5xl md:text-7xl font-bold leading-tight mb-6"
-          style={{
-            fontFamily: 'var(--font-display)',
-            color: 'var(--color-spotlight)',
-          }}
-        >
-          {t('titleAccent')}
+          <span className="block text-3xl sm:text-5xl md:text-7xl mb-1">
+            {t('title')}
+          </span>
+          <span
+            className="block text-3xl sm:text-5xl md:text-7xl"
+            style={{ color: 'var(--color-spotlight)' }}
+          >
+            {t('titleAccent')}
+          </span>
         </h1>
 
-        <p className="text-[var(--color-birch)]/80 text-lg md:text-xl mb-10">
+        <p className="text-[var(--color-birch)]/80 text-base sm:text-lg md:text-xl mb-8 sm:mb-10">
           {t('subtitle')}
         </p>
 
-        {/* CTA */}
+        {/* CTA buttons – stacked on mobile, side-by-side on sm+ */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a
             href="#quote"
-            className="inline-block bg-[var(--color-spotlight)] text-[var(--color-stage)] font-bold py-4 px-10 rounded-lg hover:bg-[var(--color-oak)] hover:scale-105 transition-all duration-300 text-lg shadow-lg shadow-[var(--color-spotlight)]/20"
+            className="w-full sm:w-auto inline-block bg-[var(--color-spotlight)] text-[var(--color-stage)] font-bold py-4 px-10 rounded-lg hover:bg-[var(--color-oak)] hover:scale-105 transition-all duration-300 text-base sm:text-lg shadow-lg shadow-[var(--color-spotlight)]/20"
           >
             {t('cta')}
           </a>
           <a
             href="#story"
-            className="inline-block border border-white/30 text-white font-medium py-4 px-10 rounded-lg hover:bg-white/10 transition-all duration-300"
+            className="w-full sm:w-auto inline-block border border-white/30 text-white font-medium py-4 px-10 rounded-lg hover:bg-white/10 transition-all duration-300 text-sm sm:text-base"
           >
             {t('credit')}
           </a>
         </div>
 
-        <p className="text-[var(--color-stone)] text-sm mt-4">{t('ctaSub')}</p>
+        <p className="text-[var(--color-stone)] text-xs sm:text-sm mt-4">{t('ctaSub')}</p>
       </div>
 
       {/* Scroll indicator */}
@@ -77,3 +76,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
