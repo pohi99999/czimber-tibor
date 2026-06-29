@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import FadeIn from '@/components/ui/FadeIn';
 
 type ProjectType = 'kitchen' | 'wardrobe' | 'stairs' | 'interior' | 'assembly' | 'other';
 type Location = 'local' | 'other' | 'austria';
@@ -141,7 +142,7 @@ function FieldInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-[var(--color-walnut)]/20 border border-[var(--color-walnut)]/40 rounded-lg px-4 py-3 text-white placeholder-[var(--color-stone)] focus:outline-none focus:border-[var(--color-spotlight)] focus:ring-1 focus:ring-[var(--color-spotlight)]/50 transition-colors duration-200"
+        className="w-full bg-[var(--color-walnut)]/20 border border-[var(--color-walnut)]/40 rounded-lg px-4 py-3 text-white placeholder-[var(--color-stone)]/70 focus:outline-none focus:border-[var(--color-spotlight)] focus:ring-2 focus:ring-[var(--color-spotlight)]/30 transition-all duration-200 leading-relaxed"
       />
     </div>
   );
@@ -245,15 +246,15 @@ export default function QuoteForm() {
   }
 
   return (
-    <section id="quote" className="py-20 md:py-32 bg-[var(--color-smoke)]/40">
+    <section id="quote" className="py-24 md:py-32 bg-[var(--color-smoke)]/40">
       <div className="container mx-auto px-6">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
+          <FadeIn className="text-center mb-12">
             <p className="text-[var(--color-spotlight)] text-xs uppercase tracking-[0.4em] mb-4">{t('title')}</p>
-            <p className="text-[var(--color-birch)]/70">{t('subtitle')}</p>
-            <div className="w-16 h-px bg-[var(--color-spotlight)] mx-auto mt-6" />
-          </div>
+            <p className="text-[var(--color-birch)]/70 leading-relaxed">{t('subtitle')}</p>
+            <div className="section-divider" />
+          </FadeIn>
 
           <div className="p-8 rounded-2xl border border-[var(--color-walnut)]/40 bg-black/40 backdrop-blur-sm">
             <ProgressBar step={step} />
@@ -344,7 +345,7 @@ export default function QuoteForm() {
                       value={form.description}
                       onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                       placeholder={t('description_placeholder')}
-                      className="w-full bg-[var(--color-walnut)]/20 border border-[var(--color-walnut)]/40 rounded-lg px-4 py-3 text-white placeholder-[var(--color-stone)] focus:outline-none focus:border-[var(--color-spotlight)] focus:ring-1 focus:ring-[var(--color-spotlight)]/50 transition-colors duration-200 resize-none"
+                      className="w-full bg-[var(--color-walnut)]/20 border border-[var(--color-walnut)]/40 rounded-lg px-4 py-3 text-white placeholder-[var(--color-stone)]/70 focus:outline-none focus:border-[var(--color-spotlight)] focus:ring-2 focus:ring-[var(--color-spotlight)]/30 transition-all duration-200 resize-none leading-relaxed"
                     />
                     <p className={`text-xs mt-1 ${form.description.length >= 50 ? 'text-green-400' : 'text-[var(--color-stone)]'}`}>
                       {form.description.length} / 50 min.

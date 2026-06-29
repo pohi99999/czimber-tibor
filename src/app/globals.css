@@ -1,31 +1,30 @@
 @import "tailwindcss";
 
-/* Cimbi Brand Design Tokens */
+/* ─── Cimbi Brand Design Tokens ─────────────────────────────── */
 @theme inline {
   /* Colours */
-  --color-walnut: #3d2b1f;
+  --color-walnut:       #3d2b1f;
   --color-walnut-light: #5a3e2b;
-  --color-oak: #8b6914;
-  --color-spotlight: #d4a853;
-  --color-birch: #e8dcc8;
-  --color-linen: #f5f0e8;
-  --color-stage: #1a1410;
-  --color-stone: #6b5e52;
-  --color-smoke: #2c2420;
-  --color-smoke-light: #3d332d;
+  --color-oak:          #8b6914;
+  --color-spotlight:    #d4a853;
+  --color-birch:        #e8dcc8;
+  --color-linen:        #f5f0e8;
+  --color-stage:        #1a1410;
+  --color-stone:        #6b5e52;
+  --color-smoke:        #2c2420;
+  --color-smoke-light:  #3d332d;
 
   /* Typography */
   --font-display: var(--font-playfair);
-  --font-body: var(--font-inter);
+  --font-body:    var(--font-inter);
 }
 
-* {
-  box-sizing: border-box;
-}
+/* ─── Reset ─────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-  /* Offset for fixed navbar so anchors don't hide under it */
+  /* Offset for fixed navbar (~96px) so anchor links don't hide under header */
   scroll-padding-top: 6rem;
 }
 
@@ -34,17 +33,45 @@ body {
   color: var(--color-birch);
   font-family: var(--font-body), 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.65;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-stage); }
-::-webkit-scrollbar-thumb { background: var(--color-walnut); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-oak); }
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: var(--color-stage); }
+::-webkit-scrollbar-thumb  { background: var(--color-walnut-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-spotlight); }
 
-/* Focus ring */
+/* ─── Focus ring (WCAG AA compliant) ────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--color-spotlight);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Form inputs: consistent base style ────────────────────── */
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+textarea {
+  -webkit-appearance: none;
+}
+
+/* Autofill background override (Chrome/Safari) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #2c2420 inset;
+  -webkit-text-fill-color: #e8dcc8;
+  caret-color: #e8dcc8;
+}
+
+/* ─── Section divider helper ─────────────────────────────────── */
+.section-divider {
+  width: 3rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-spotlight), transparent);
+  margin: 1.5rem auto 0;
 }
 

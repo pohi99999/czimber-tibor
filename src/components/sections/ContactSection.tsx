@@ -1,20 +1,22 @@
 import { useTranslations } from 'next-intl';
+import FadeIn from '@/components/ui/FadeIn';
 
 export default function ContactSection() {
   const t = useTranslations('contact');
 
   return (
-    <section id="contact" className="py-20 md:py-32">
-      <div className="container mx-auto px-6">
+    <section id="contact" className="py-24 md:py-32">
+      <div className="container mx-auto px-6 md:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <FadeIn className="text-center mb-12">
             <p className="text-[var(--color-spotlight)] text-xs uppercase tracking-[0.4em] mb-4">{t('title')}</p>
-            <div className="w-16 h-px bg-[var(--color-spotlight)] mx-auto mt-4" />
-          </div>
+            <div className="section-divider" />
+          </FadeIn>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Contact details */}
-            <div className="p-8 rounded-2xl border border-[var(--color-walnut)]/40 bg-black/30 backdrop-blur-sm space-y-5">
+            <FadeIn direction="right">
+              <div className="p-8 rounded-2xl border border-[var(--color-walnut)]/40 bg-black/30 backdrop-blur-sm space-y-5">
               <h3
                 className="text-2xl font-bold text-white mb-6"
                 style={{ fontFamily: 'var(--font-display)' }}
@@ -87,20 +89,23 @@ export default function ContactSection() {
                 </div>
               ))}
             </div>
+            </FadeIn>
 
             {/* Google Maps */}
-            <div className="rounded-2xl overflow-hidden shadow-2xl border border-[var(--color-walnut)]/30 h-[420px]">
-              <iframe
-                src="https://maps.google.com/maps?q=Dukai%20Tak%C3%A1cs%20Judit%20u.%209%2C%208900%20Zalaegerszeg&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'grayscale(30%) contrast(1.1)' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Czimber Tibor EV location"
-              />
-            </div>
+            <FadeIn direction="left">
+              <div className="rounded-2xl overflow-hidden shadow-2xl border border-[var(--color-walnut)]/30 h-[420px]">
+                <iframe
+                  src="https://maps.google.com/maps?q=Dukai%20Tak%C3%A1cs%20Judit%20u.%209%2C%208900%20Zalaegerszeg&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: 'grayscale(30%) contrast(1.1)' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Czimber Tibor EV location"
+                />
+              </div>
+            </FadeIn>
           </div>
         </div>
       </div>

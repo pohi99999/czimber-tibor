@@ -29,7 +29,12 @@ export default function Navbar({ locale }: { locale: Locale }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // #about and #story both resolve to TheatreOriginStory – merged into one entry
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
   const navLinks = [
     { href: '#story', label: t('about') },
     { href: '#services', label: t('services') },
@@ -44,110 +49,136 @@ export default function Navbar({ locale }: { locale: Locale }) {
     { code: 'en', label: 'EN' },
   ];
 
-  return (
-    <header
-      className={`fixed w-full z-50 top-0 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[var(--color-smoke)]/95 backdrop-blur-md shadow-lg shadow-black/20'
-          : 'bg-[var(--color-smoke)]/80 backdrop-blur-sm'
-      }`}
-    >
-      <div className="container mx-auto px-6">
-        {/* Top row: Logo + desktop lang switcher + mobile hamburger */}
-        <div className="flex items-center justify-between py-4">
-          <a href="#home" className="flex items-center gap-3 group flex-shrink-0">
-            <Image
-              src="/logo.png"
-              alt="Czimber Tibor EV Logó"
-              width={48}
-              height={48}
-              className="h-12 w-auto transition-transform duration-300 group-hover:scale-110"
-            />
-            <span className="text-white font-semibold text-lg transition-colors duration-300 group-hover:text-[var(--color-spotlight)]">
-              Czimber Tibor
-            </span>
-          </a>
+  const headerClass = scrolled
+    ? 'bg-[var(--color-smoke)] backdrop-blur-xl shadow-xl shadow-black/30'
+    : 'bg-[var(--color-smoke)]/85 backdrop-blur-lg';
 
-          <div className="flex items-center gap-3">
-            {/* Language switcher – desktop only */}
-            <div className="hidden md:flex items-center gap-2 bg-black/30 px-3 py-1.5 rounded-md">
-              {locales.map(({ code, label }, i) => (
-                <span key={code} className="flex items-center gap-2">
-                  {i > 0 && <span className="text-[var(--color-stone)]">|</span>}
-                  <button
-                    onClick={() => router.push(localeHref(pathname, code, locale))}
-                    className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-200 ${
-                      locale === code
-                        ? 'text-[var(--color-spotlight)]'
-                        : 'text-[var(--color-stone)] hover:text-white'
+  return (
+    <>
+      <header className={`fixed w-full z-50 top-0 transition-all duration-300 ${headerClass}`}>
+        <div className="container mx-auto px-6 md:px-8">
+          {/* Top row: logo + right controls */}
+          <div className="flex items-center justify-between h-16 md:h-auto md:py-4">
+            <a href="#home" className="flex items-center gap-3 group flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Czimber Tibor EV Logó"
+                width={44}
+                height={44}
+                className="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-110"
+              />
+              <span className="text-white font-semibold text-base md:text-lg transition-colors duration-300 group-hover:text-[var(--color-spotlight)] leading-tight">
+                Czimber Tibor
+              </span>
+            </a>
+
+            <div className="flex items-center gap-3">
+              {/* Language switcher – desktop only */}
+              <div className="hidden md:flex items-center gap-2 bg-black/25 px-3 py-1.5 rounded-md border border-white/5">
+                {locales.map(({ code, label }, i) => (
+                  <span key={code} className="flex items-center gap-2">
+                    {i > 0 && <span className="text-[var(--color-stone)]">|</span>}
+                    <button
+                      onClick={() => router.push(localeHref(pathname, code, locale))}
+                      className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-200 py-1 px-0.5 ${
+                        locale === code
+                          ? 'text-[var(--color-spotlight)]'
+                          : 'text-[var(--color-stone)] hover:text-white'
+                      }`}
+                      aria-label={`Switch to ${label}`}
+                    >
+                      {label}
+                    </button>
+                  </span>
+                ))}
+              </div>
+
+              {/* Animated hamburger – mobile only */}
+              <button
+                className="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[var(--color-spotlight)]"
+                onClick={() => setMenuOpen((o) => !o)}
+                aria-label="Toggle menu"
+                aria-expanded={menuOpen}
+              >
+                <span className="flex flex-col gap-1.5 w-5">
+                  <span
+                    className={`block h-0.5 bg-white rounded-full transition-all duration-300 origin-center ${
+                      menuOpen ? 'rotate-45 translate-y-2' : ''
                     }`}
-                    aria-label={`Switch to ${label}`}
-                  >
-                    {label}
-                  </button>
+                  />
+                  <span
+                    className={`block h-0.5 bg-white rounded-full transition-all duration-300 ${
+                      menuOpen ? 'opacity-0 scale-x-0' : ''
+                    }`}
+                  />
+                  <span
+                    className={`block h-0.5 bg-white rounded-full transition-all duration-300 origin-center ${
+                      menuOpen ? '-rotate-45 -translate-y-2' : ''
+                    }`}
+                  />
                 </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop nav links */}
+          <nav className="hidden md:flex items-center justify-center py-2 border-t border-white/8">
+            <div className="flex items-center gap-8">
+              {navLinks.map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="relative text-sm uppercase tracking-widest text-[var(--color-birch)]/70 hover:text-white transition-colors duration-300 py-1 after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[var(--color-spotlight)] after:transition-all after:duration-300 hover:after:w-full"
+                >
+                  {label}
+                </a>
               ))}
             </div>
-
-            {/* Hamburger – mobile only (single instance) */}
-            <button
-              className="md:hidden text-white p-2 focus:outline-none min-w-[44px] min-h-[44px] flex items-center justify-center"
-              onClick={() => setMenuOpen((o) => !o)}
-              aria-label="Toggle menu"
-              aria-expanded={menuOpen}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {menuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                )}
-              </svg>
-            </button>
-          </div>
+          </nav>
         </div>
+      </header>
 
-        {/* Desktop nav links */}
-        <nav className="hidden md:flex items-center justify-center py-2 border-t border-white/10">
-          <div className="flex items-center gap-8">
-            {navLinks.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                className="text-sm uppercase tracking-wider text-[var(--color-birch)]/80 hover:text-white hover:tracking-widest transition-all duration-300"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
-        </nav>
-      </div>
-
-      {/* Mobile dropdown menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-[var(--color-smoke)]/98 backdrop-blur-md border-t border-white/10">
-          <div className="container mx-auto px-6 py-4 space-y-1">
-            {navLinks.map(({ href, label }) => (
+      {/* Full-screen mobile overlay */}
+      <div
+        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ${
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-[var(--color-stage)]/70 backdrop-blur-sm"
+          onClick={() => setMenuOpen(false)}
+        />
+        {/* Slide-down drawer */}
+        <nav
+          className={`absolute top-16 left-0 right-0 bg-[var(--color-smoke)] border-b border-white/10 shadow-2xl transition-transform duration-300 ease-out ${
+            menuOpen ? 'translate-y-0' : '-translate-y-2'
+          }`}
+        >
+          <div className="px-6 py-5 space-y-1">
+            {navLinks.map(({ href, label }, i) => (
               <a
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="block text-center py-3 text-sm uppercase tracking-wider text-[var(--color-birch)]/80 hover:text-white transition-colors duration-200 min-h-[44px] flex items-center justify-center"
+                className="flex items-center justify-center min-h-[52px] text-sm uppercase tracking-widest text-[var(--color-birch)]/80 hover:text-white hover:bg-white/5 rounded-xl transition-colors duration-200"
+                style={{ transitionDelay: menuOpen ? `${i * 35}ms` : '0ms' }}
               >
                 {label}
               </a>
             ))}
-            {/* Language switcher in mobile menu */}
-            <div className="flex items-center justify-center gap-4 pt-4 border-t border-white/10 mt-4">
+
+            {/* Language switcher */}
+            <div className="flex items-center justify-center gap-6 pt-4 mt-2 border-t border-white/10">
               {locales.map(({ code, label }, i) => (
-                <span key={code} className="flex items-center gap-4">
-                  {i > 0 && <span className="text-[var(--color-stone)]">|</span>}
+                <span key={code} className="flex items-center gap-6">
+                  {i > 0 && <span className="text-[var(--color-stone)] text-xs">|</span>}
                   <button
                     onClick={() => {
                       router.push(localeHref(pathname, code, locale));
                       setMenuOpen(false);
                     }}
-                    className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-200 min-h-[44px] px-2 ${
+                    className={`text-xs font-bold uppercase tracking-widest min-h-[44px] px-3 transition-colors duration-200 ${
                       locale === code
                         ? 'text-[var(--color-spotlight)]'
                         : 'text-[var(--color-stone)] hover:text-white'
@@ -159,8 +190,8 @@ export default function Navbar({ locale }: { locale: Locale }) {
               ))}
             </div>
           </div>
-        </div>
-      )}
-    </header>
+        </nav>
+      </div>
+    </>
   );
 }
