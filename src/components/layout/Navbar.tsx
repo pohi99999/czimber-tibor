@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/routing';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { routing } from '@/i18n/routing';
@@ -13,14 +13,6 @@ const langNames: Record<Locale, string> = {
   de: 'Német',
   en: 'Angol',
 };
-
-function localeHref(pathname: string, newLocale: Locale, currentLocale: Locale): string {
-  const stripped =
-    currentLocale !== routing.defaultLocale
-      ? pathname.replace(`/${currentLocale}`, '') || '/'
-      : pathname;
-  return newLocale === routing.defaultLocale ? stripped : `/${newLocale}${stripped}`;
-}
 
 export default function Navbar({ locale }: { locale: Locale }) {
   const t = useTranslations('nav');
@@ -85,7 +77,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
                   <span key={code} className="flex items-center gap-2">
                     {i > 0 && <span className="text-[var(--color-stone)]">|</span>}
                     <button
-                      onClick={() => router.push(localeHref(pathname, code, locale))}
+                      onClick={() => router.replace(pathname, { locale: code })}
                       className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-200 py-1 px-0.5 ${
                         locale === code
                           ? 'text-[var(--color-spotlight)]'
@@ -181,7 +173,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
                   {i > 0 && <span className="text-[var(--color-stone)] text-xs">|</span>}
                   <button
                     onClick={() => {
-                      router.push(localeHref(pathname, code, locale));
+                      router.replace(pathname, { locale: code });
                       setMenuOpen(false);
                     }}
                     className={`text-xs font-bold uppercase tracking-widest min-h-[44px] px-3 transition-colors duration-200 ${
