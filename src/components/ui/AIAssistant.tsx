@@ -214,7 +214,7 @@ export default function AIAssistant() {
                 <div className="relative">
                   <Image
                     src="/nkep.jpg"
-                    alt="Czimber Tibor"
+                    alt="Czimber Tibor portréja"
                     width={40}
                     height={40}
                     className="w-10 h-10 rounded-full object-cover border border-[var(--color-spotlight)]/40"
@@ -328,7 +328,7 @@ export default function AIAssistant() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="w-14 h-14 rounded-full bg-[var(--color-smoke)] border-2 border-[var(--color-spotlight)] shadow-2xl flex items-center justify-center relative cursor-pointer group"
-        aria-label="Toggle AI Assistant"
+        aria-label={isOpen ? "AI Asszisztens bezárása" : "AI Asszisztens megnyitása"}
       >
         {/* Glowing aura */}
         <span className="absolute inset-0 rounded-full bg-[var(--color-spotlight)]/10 group-hover:scale-110 transition-transform duration-300" />

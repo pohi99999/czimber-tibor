@@ -21,7 +21,7 @@ export default function Footer() {
               <p className="text-[var(--color-stone)] text-sm">
                 &copy; {year} {t('copyright')}
               </p>
-              <p className="text-[var(--color-oak)] text-xs italic mt-0.5">{t('tagline')}</p>
+              <p className="text-[var(--color-oak-light)] text-xs italic mt-0.5">{t('tagline')}</p>
             </div>
           </div>
 

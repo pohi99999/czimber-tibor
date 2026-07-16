@@ -161,7 +161,7 @@ export default function AudioPlayer() {
               ? 'ring-2 ring-[var(--color-spotlight)]/50 animate-pulse'
               : 'border-[var(--color-spotlight)]/60'
           }`}
-          aria-label={isPlaying ? 'Némítás / Zene leállítása' : 'Háttérzene bekapcsolása'}
+          aria-label="Háttérzene lejátszása és némítása"
         >
           {isPlaying && !isMuted ? (
             /* Playing Equalizer Animation */

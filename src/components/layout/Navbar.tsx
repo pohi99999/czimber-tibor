@@ -8,6 +8,12 @@ import { routing } from '@/i18n/routing';
 
 type Locale = (typeof routing.locales)[number];
 
+const langNames: Record<Locale, string> = {
+  hu: 'Magyar',
+  de: 'Német',
+  en: 'Angol',
+};
+
 function localeHref(pathname: string, newLocale: Locale, currentLocale: Locale): string {
   const stripped =
     currentLocale !== routing.defaultLocale
@@ -85,7 +91,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
                           ? 'text-[var(--color-spotlight)]'
                           : 'text-[var(--color-stone)] hover:text-white'
                       }`}
-                      aria-label={`Switch to ${label}`}
+                      aria-label={`Nyelvválasztás: ${langNames[code]}`}
                     >
                       {label}
                     </button>
@@ -97,7 +103,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
               <button
                 className="md:hidden w-11 h-11 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-[var(--color-spotlight)]"
                 onClick={() => setMenuOpen((o) => !o)}
-                aria-label="Toggle menu"
+                aria-label={menuOpen ? "Navigációs menü bezárása" : "Navigációs menü megnyitása"}
                 aria-expanded={menuOpen}
               >
                 <span className="flex flex-col gap-1.5 w-5">
@@ -183,6 +189,7 @@ export default function Navbar({ locale }: { locale: Locale }) {
                         ? 'text-[var(--color-spotlight)]'
                         : 'text-[var(--color-stone)] hover:text-white'
                     }`}
+                    aria-label={`Nyelvválasztás: ${langNames[code]}`}
                   >
                     {label}
                   </button>
