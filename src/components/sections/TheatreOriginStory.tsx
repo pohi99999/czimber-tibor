@@ -93,7 +93,7 @@ export default function TheatreOriginStory() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-[var(--color-walnut)]/30">
               <Image
                 src="/nkep.jpg"
-                alt="Czimber Tibor mesterasztalos – egyedi bútor és lépcsőkivitelezés Zalaegerszegen"
+                alt="Czimber Tibor asztalosmester a műhelyben, színházi díszletépítő háttérrel"
                 width={600}
                 height={400}
                 className="w-full object-cover"

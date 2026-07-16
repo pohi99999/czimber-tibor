@@ -147,6 +147,7 @@ function Lightbox({
   labelClose,
   labelPrev,
   labelNext,
+  galleryTitle,
 }: {
   images: string[];
   index: number;
@@ -154,6 +155,7 @@ function Lightbox({
   labelClose: string;
   labelPrev: string;
   labelNext: string;
+  galleryTitle: string;
 }) {
   const [current, setCurrent] = useState(index);
 
@@ -200,7 +202,7 @@ function Lightbox({
       {/* Image – stops click from bubbling up to the backdrop */}
       <img
         src={`/${encodeURI(images[current])}`}
-        alt={`Gallery image ${current + 1} of ${images.length}`}
+        alt={`Czimber Tibor asztalos munkája: ${galleryTitle} – ${current + 1}. kép a(z) ${images.length}-ből`}
         loading="lazy"
         onClick={(e) => e.stopPropagation()}
         className="max-w-[90vw] max-h-[80vh] md:max-h-[85vh] object-contain rounded-lg shadow-2xl"
@@ -249,12 +251,12 @@ function GalleryCard({
   btnLabel: string;
 }) {
   return (
-    <div className="group flex flex-col rounded-xl overflow-hidden border border-[var(--color-walnut)]/30 bg-black/30 hover:border-[var(--color-spotlight)]/50 hover:shadow-2xl hover:shadow-black/40 hover:-translate-y-1 transition-all duration-300">
+    <div className="group flex flex-col rounded-xl overflow-hidden border border-[var(--color-walnut)]/30 bg-black/30 hover:border-[var(--color-spotlight)]/50 hover:shadow-[0_0_15px_rgba(212,168,83,0.35),0_10px_25px_rgba(0,0,0,0.5)] hover:-translate-y-1 transition-all duration-300">
       {/* aspect-video ensures consistent 16:9 ratio without distortion */}
       <div className="relative overflow-hidden aspect-video">
         <Image
           src={`/${encodeURI(cover)}`}
-          alt={`Czimber Tibor asztalos munkája – ${title.toLowerCase()} kategória`}
+          alt={`Czimber Tibor asztalos munkája: ${title} kategória borítóképe`}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -270,7 +272,7 @@ function GalleryCard({
       <div className="p-4">
         <button
           onClick={() => onOpen(galleryKey)}
-          className="w-full bg-[var(--color-spotlight)] text-[var(--color-stage)] font-semibold py-3 px-4 rounded-lg hover:bg-[var(--color-oak)] active:scale-95 transition-all duration-200 text-sm min-h-[44px]"
+          className="w-full bg-[var(--color-spotlight)] text-[var(--color-stage)] font-semibold py-3 px-4 rounded-lg hover:bg-[var(--color-oak)] hover:shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)] active:scale-95 transition-all duration-200 text-sm min-h-[44px]"
         >
           {btnLabel}
         </button>
@@ -326,6 +328,7 @@ export default function ProjectsGallery() {
           labelClose={t('close')}
           labelPrev={t('prev')}
           labelNext={t('next')}
+          galleryTitle={categories.find((c) => c.key === lightbox.key)?.title || ''}
         />
       )}
     </section>
