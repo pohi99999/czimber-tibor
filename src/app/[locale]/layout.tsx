@@ -6,6 +6,20 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import AudioPlayer from '@/components/layout/AudioPlayer';
 import AIAssistant from '@/components/ui/AIAssistant';
+import { Inter, Playfair_Display } from 'next/font/google';
+import '../globals.css';
+
+const inter = Inter({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
 
 export async function generateMetadata(props: LayoutProps<'/[locale]'>) {
   const { locale } = await props.params;
@@ -32,12 +46,16 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <Navbar locale={locale} />
-      <main className="flex-1">{children}</main>
-      <Footer />
-      <AudioPlayer />
-      <AIAssistant />
-    </NextIntlClientProvider>
+    <html lang={locale} className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Navbar locale={locale} />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <AudioPlayer />
+          <AIAssistant />
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
