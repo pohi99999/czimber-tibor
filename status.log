@@ -1,8 +1,19 @@
 [DEPLOYMENT STATUS LOG]
-Feature: Visual Polish and Accessibility Improvements
+Feature: Enterprise Technical SEO & Dynamic Sitemap/Robots
 Project: Czimber Tibor EV Website (czimber-tibor)
 Target Branch: main
 Repository: https://github.com/pohi99999/czimber-tibor.git
-Commit: fix: visual polish and accessibility improvements based on Chrome AI audit (6f10830)
-Timestamp: 2026-07-16T13:56:00+02:00
-Status: SUCCESS - Pushed to main branch, Vercel auto-deployment active. Visual polish and WCAG AA accessibility improvements are live.
+Commit: feat: implement professional technical SEO, dynamic sitemap, robots.txt, and i18n metadata (4911ea6)
+Timestamp: 2026-07-17T15:03:00+02:00
+Status: SUCCESS - Dynamic robots.txt pointing to dynamic sitemap.xml implemented. Dynamic localized sitemap mapping all supported locales (hu, de, en) with language alternates added. Global layout.tsx updated with metadataBase, OpenGraph, Twitter defaults, and title/description fallback. Localized [locale]/layout.tsx updated with dynamic metadata generator including canonical URLs and hreflang alternates. Pushed to main branch, Vercel auto-deployment active.
+
+---
+
+[DEPLOYMENT STATUS LOG]
+Feature: Fix Language Switcher Navigation Routing Trap
+Project: Czimber Tibor EV Website (czimber-tibor)
+Target Branch: main
+Repository: https://github.com/pohi99999/czimber-tibor.git
+Commit: fix: language switcher navigation bug to allow returning to default locale (hu) (4c2645d)
+Timestamp: 2026-07-16T14:09:10+02:00
+Status: SUCCESS - Language switcher routing trap bug resolved. Custom next-intl useRouter and usePathname integrated in Navbar. Pushed to main branch, Vercel auto-deployment active.
