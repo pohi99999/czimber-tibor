@@ -24,8 +24,25 @@ const playfair = Playfair_Display({
 export async function generateMetadata(props: LayoutProps<'/[locale]'>) {
   const { locale } = await props.params;
   const t = await getTranslations({ locale, namespace: 'hero' });
+  
+  const baseUrl = 'https://czimber-tibor.vercel.app';
+  const canonicalUrl = locale === 'hu' ? baseUrl : `${baseUrl}/${locale}`;
+
   return {
-    title: `Czimber Tibor EV – ${t('titleAccent')}`,
+    title: t('titleAccent'),
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        hu: baseUrl,
+        de: `${baseUrl}/de`,
+        en: `${baseUrl}/en`,
+        'x-default': baseUrl,
+      },
+    },
+    openGraph: {
+      url: canonicalUrl,
+      locale: locale === 'hu' ? 'hu_HU' : locale === 'de' ? 'de_AT' : 'en_US',
+    },
   };
 }
 
