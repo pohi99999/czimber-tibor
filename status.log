@@ -1,4 +1,15 @@
 [DEPLOYMENT STATUS LOG]
+Feature: Enterprise-Grade SEO Audit & Optimization
+Project: Czimber Tibor EV Website (czimber-tibor)
+Target Branch: main
+Repository: https://github.com/pohi99999/czimber-tibor.git
+Commit: feat(seo): enterprise-grade SEO audit - JSON-LD schema, robots hardening, sitemap optimization & verification hooks
+Timestamp: 2026-08-14T10:27:00+02:00
+Status: SUCCESS - JSON-LD HomeAndConstructionBusiness schema markup implemented in locale layout. Hardened robots.txt with disallow '/api/'. Sitemap alternate language entries expanded with x-default. Root layout updated with Google Search Console verification variable support and fully qualified absolute OG/Twitter image URLs. Build verified with 0 errors. Pushed to main branch, Vercel auto-deployment active.
+
+---
+
+[DEPLOYMENT STATUS LOG]
 Feature: Enterprise Technical SEO & Dynamic Sitemap/Robots
 Project: Czimber Tibor EV Website (czimber-tibor)
 Target Branch: main

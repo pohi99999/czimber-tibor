@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           hu: baseUrl,
           de: `${baseUrl}/de`,
           en: `${baseUrl}/en`,
+          'x-default': baseUrl,
         },
       },
     },
@@ -28,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           hu: baseUrl,
           de: `${baseUrl}/de`,
           en: `${baseUrl}/en`,
+          'x-default': baseUrl,
         },
       },
     },
@@ -41,8 +43,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
           hu: baseUrl,
           de: `${baseUrl}/de`,
           en: `${baseUrl}/en`,
+          'x-default': baseUrl,
         },
       },
     },
   ];
 }
+

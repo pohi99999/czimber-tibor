@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+  },
   openGraph: {
     type: 'website',
     locale: 'hu_HU',
@@ -23,7 +26,7 @@ export const metadata: Metadata = {
       'Czimber Tibor prémium egyedi bútorok készítése mesteri és színházi precizitással. Konyhabútorok, beépített szekrények és belsőépítészeti munkák Zalaegerszegen és Ausztria egész területén.',
     images: [
       {
-        url: '/logo.png',
+        url: 'https://czimber-tibor.vercel.app/logo.png',
         width: 1200,
         height: 630,
         alt: 'Czimber Tibor Mesterasztalos - Prémium Egyedi Bútorok',
@@ -35,7 +38,7 @@ export const metadata: Metadata = {
     title: 'Czimber Tibor Mesterasztalos | Prémium Egyedi Bútorok',
     description:
       'Czimber Tibor prémium egyedi bútorok készítése mesteri és színházi precizitással. Konyhabútorok, beépített szekrények és belsőépítészeti munkák Zalaegerszegen és Ausztria egész területén.',
-    images: ['/logo.png'],
+    images: ['https://czimber-tibor.vercel.app/logo.png'],
   },
 };
 
@@ -46,4 +49,5 @@ export default function RootLayout({
 }) {
   return children;
 }
+
 
