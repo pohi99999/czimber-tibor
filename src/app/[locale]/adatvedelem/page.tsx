@@ -40,7 +40,7 @@ export default async function PrivacyPage(props: PageProps<'/[locale]/adatvedele
           <strong>Jogalap:</strong> az Ön hozzájárulása (GDPR 6. cikk (1) bekezdés a) pont), illetve a szerződés megkötését
           megelőzően, az Ön kérésére megtett lépések (GDPR 6. cikk (1) bekezdés b) pont).
         </li>
-        <li><strong>Megőrzési idő:</strong> <Missing>megőrzési idő</Missing></li>
+        <li><strong>Megőrzési idő:</strong> a beérkezésüktől számított 1 év, utána törlésre kerülnek.</li>
         <li>
           <strong>Hogyan jut el hozzánk:</strong> az űrlap tartalmát e-mailben kapjuk meg. A levelet a Resend
           e-mail-szolgáltatás kézbesíti, és a vállalkozó e-mail-fiókjába (Gmail) érkezik.
