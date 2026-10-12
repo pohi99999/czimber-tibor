@@ -93,24 +93,24 @@ export default function TheatreOriginStory() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-[var(--color-walnut)]/30">
               <Image
                 src="/nkep.jpg"
-                alt="Czimber Tibor asztalosmester a műhelyben, színházi díszletépítő háttérrel"
+                alt={t('logo_alt')}
                 width={600}
                 height={400}
                 className="w-full object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={false}
               />
-              {/* Cinematic overlay quote */}
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 to-transparent p-6">
-                <blockquote
-                  className="text-[var(--color-birch)] text-sm italic leading-relaxed"
-                  style={{ fontFamily: 'var(--font-display)' }}
-                >
-                  &ldquo;Minden milliméter egy döntés. Minden illesztés egy elköteleződés.&rdquo;
-                </blockquote>
-                <p className="text-[var(--color-spotlight)] text-xs mt-2 tracking-wider">— Czimber Tibor</p>
-              </div>
             </div>
+            {/* The quote sits under the image, not on the white logo (Lumen 3360 M2: unreadable there) */}
+            <figure className="border-l-2 border-[var(--color-spotlight)] pl-4">
+              <blockquote
+                className="text-[var(--color-birch)] text-base italic leading-relaxed"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                &ldquo;{t('quote')}&rdquo;
+              </blockquote>
+              <figcaption className="text-[var(--color-spotlight)] text-xs mt-2 tracking-wider">Czimber Tibor</figcaption>
+            </figure>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-3">

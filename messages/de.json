@@ -47,7 +47,9 @@
     "stat2_value": "0",
     "stat2_label": "tolerierte Fehler",
     "stat3_value": "100%",
-    "stat3_label": "zufriedene Kunden"
+    "stat3_label": "zufriedene Kunden",
+    "logo_alt": "Logo von Czimber Tibor",
+    "quote": "Jeder Millimeter ist eine Entscheidung. Jede Verbindung ist eine Verpflichtung."
   },
   "services": {
     "motto": "\"Von der Planung bis zur Ausführung strebe ich bei jedem Schritt nach Perfektion.\"",
@@ -80,7 +82,6 @@
     "step1_title": "Was planen Sie?",
     "step2_title": "Projektdetails",
     "step3_title": "Kontaktdaten",
-    "step_of": "/ 3. Schritt",
     "type_kitchen": "Küchenmöbel",
     "type_wardrobe": "Einbauschrank / Garderobe",
     "type_stairs": "Treppe",
@@ -117,7 +118,10 @@
     "select_type": "Bitte wählen Sie mindestens einen Typ.",
     "location_label": "Standort",
     "timeline_label": "Wann möchten Sie beginnen?",
-    "budget_label": "Geplantes Budget"
+    "budget_label": "Geplantes Budget",
+    "step_label": "Schritt {n} / 3",
+    "privacy_notice": "Ihre Angaben (Name, E-Mail, Telefonnummer, Projektbeschreibung) verwenden wir ausschließlich zur Beantwortung Ihrer Anfrage. Details: <link>Datenschutzerklärung</link> (auf Ungarisch).",
+    "consent_label": "Ich habe die <link>Datenschutzerklärung</link> gelesen und willige ein, dass meine Angaben zur Beantwortung der Anfrage verarbeitet werden. *"
   },
   "contact": {
     "title": "Kontakt",
@@ -128,10 +132,30 @@
     "email": "czimbertibor2@gmail.com",
     "vat_label": "USt-IdNr.: ",
     "vat": "HU58746093",
-    "service_area": "Servicegebiet: Zalaegerszeg und Umgebung, Österreich"
+    "service_area": "Servicegebiet: Zalaegerszeg und Umgebung, Österreich",
+    "map_title": "Standort von Czimber Tibor e.v. auf der Karte",
+    "map_notice": "Die Karte ist ein Dienst von Google. Beim Laden erhält Google Daten (z. B. die IP-Adresse) und kann Cookies setzen.",
+    "map_load": "Karte laden",
+    "map_open": "In Google Maps öffnen"
   },
   "footer": {
     "copyright": "Czimber Tibor EV – Alle Rechte vorbehalten.",
-    "tagline": "Millimeterpräzision. Theatrale Vergangenheit. Schreiner-Zukunft."
+    "tagline": "Millimeterpräzision. Theatrale Vergangenheit. Schreiner-Zukunft.",
+    "privacy": "Datenschutz",
+    "imprint": "Impressum",
+    "terms": "AGB"
+  },
+  "meta": {
+    "site": "Czimber Tibor Meisterschreiner",
+    "description": "Maßgefertigte Küchen, Einbauschränke, Garderoben, Bad- und Flurmöbel sowie Holztreppen aus Zalaegerszeg, auch für Kunden in Österreich. Angebot anfordern!",
+    "og_alt": "Maßgefertigte Küche aus der Werkstatt von Czimber Tibor"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "text": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "back": "Zur Startseite"
+  },
+  "legal": {
+    "hu_only": "Diese Seite ist nur auf Ungarisch verfügbar. Bei Fragen erreichen Sie uns per E-Mail oder Telefon (siehe unten)."
   }
 }

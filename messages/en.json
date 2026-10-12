@@ -47,7 +47,9 @@
     "stat2_value": "0",
     "stat2_label": "tolerances for error",
     "stat3_value": "100%",
-    "stat3_label": "satisfied clients"
+    "stat3_label": "satisfied clients",
+    "logo_alt": "Czimber Tibor's logo",
+    "quote": "Every millimetre is a decision. Every joint is a commitment."
   },
   "services": {
     "motto": "\"From design to execution, I strive for perfection at every step to create unique and timeless solutions.\"",
@@ -80,7 +82,6 @@
     "step1_title": "What are you planning?",
     "step2_title": "Project details",
     "step3_title": "Your contact details",
-    "step_of": "/ Step 3",
     "type_kitchen": "Kitchen furniture",
     "type_wardrobe": "Built-in wardrobe / closet",
     "type_stairs": "Stairs",
@@ -117,7 +118,10 @@
     "select_type": "Please select at least one type.",
     "location_label": "Location",
     "timeline_label": "When would you like to start?",
-    "budget_label": "Planned budget"
+    "budget_label": "Planned budget",
+    "step_label": "Step {n} / 3",
+    "privacy_notice": "We use the details you enter (name, e-mail, phone, project description) only to answer your request. Details: <link>Privacy notice</link> (in Hungarian).",
+    "consent_label": "I have read the <link>Privacy notice</link> and agree that my details are processed to answer my request. *"
   },
   "contact": {
     "title": "Contact",
@@ -128,10 +132,30 @@
     "email": "czimbertibor2@gmail.com",
     "vat_label": "VAT number: ",
     "vat": "HU58746093",
-    "service_area": "Service area: Zalaegerszeg & surroundings, Austria"
+    "service_area": "Service area: Zalaegerszeg & surroundings, Austria",
+    "map_title": "Czimber Tibor e.v. on the map",
+    "map_notice": "The map is a Google service. When it loads, Google receives data (such as your IP address) and may set cookies.",
+    "map_load": "Load map",
+    "map_open": "Open in Google Maps"
   },
   "footer": {
     "copyright": "Czimber Tibor EV – All rights reserved.",
-    "tagline": "Millimetre precision. Theatrical past. Carpenter future."
+    "tagline": "Millimetre precision. Theatrical past. Carpenter future.",
+    "privacy": "Privacy",
+    "imprint": "Imprint",
+    "terms": "Terms"
+  },
+  "meta": {
+    "site": "Czimber Tibor Master Carpenter",
+    "description": "Custom kitchens, built-in wardrobes, bathroom and hallway furniture, wooden stairs and furniture assembly in Zalaegerszeg, Hungary and Austria. Request a quote.",
+    "og_alt": "Custom kitchen from Czimber Tibor's workshop"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist or has moved.",
+    "back": "Back to the home page"
+  },
+  "legal": {
+    "hu_only": "This page is available in Hungarian only. For questions, contact us by e-mail or phone (see below)."
   }
 }

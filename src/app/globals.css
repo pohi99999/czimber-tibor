@@ -95,3 +95,14 @@ input:-webkit-autofill:focus {
 }
 
 
+
+/* Legal pages (adatvedelem, impresszum, aszf) */
+.legal h2 { color: #fff; font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin: 2.25rem 0 0.75rem; }
+.legal h3 { color: #fff; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.legal p, .legal li { margin-bottom: 0.6rem; }
+.legal ul { list-style: disc; padding-left: 1.25rem; }
+.legal a { color: var(--color-spotlight); text-decoration: underline; overflow-wrap: anywhere; }
+.legal table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0.75rem 0 1.25rem; }
+.legal th, .legal td { border: 1px solid rgb(255 255 255 / 0.15); padding: 0.5rem; text-align: left; vertical-align: top; }
+.legal th { color: #fff; }
+.legal .table-wrap { overflow-x: auto; }

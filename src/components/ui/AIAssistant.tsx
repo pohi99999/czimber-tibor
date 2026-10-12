@@ -17,12 +17,12 @@ const translations = {
     placeholder: 'Kérdezzen bátran...',
     typing: 'Cimbi ír...',
     close: 'Bezárás',
-    welcome: 'Szia! Czimber Tibor (Cimbi) AI asszisztense vagyok. Miben segíthetek ma? Kérdezhetsz a színházi díszletépítő múltamról, egyedi konyha-, fürdőszoba- vagy előszobabútoraimról, osztrák kiszállításról, vagy akár az [Ajánlatkérés](#quote) menetéről!',
+    welcome: 'Üdvözlöm! Czimber Tibor (Cimbi) weboldalának asszisztense vagyok. Kérdezzen bátran Tibor munkáiról, színházi múltjáról, a konyha-, fürdőszoba- és előszobabútorokról, az ausztriai munkákról vagy az [Ajánlatkérés](#quote) menetéről. Kérjük, személyes adatot ne írjon a chatbe.',
     quickReplies: [
-      { text: 'Színházi múlt? 🎭', prompt: 'Mesélj a színházi díszletépítő múltadról! Hogyan hat ez a bútorok minőségére?' },
-      { text: 'Ausztriába is szállítasz? 🇦🇹', prompt: 'Hogyan működik a felmérés és kiszállítás Ausztriába (pl. Graz, Burgenland)?' },
-      { text: 'Árajánlat menete? 📝', prompt: 'Hogyan kérhetek árajánlatot, és mennyi idő alatt válaszolsz?' },
-      { text: 'Milyen bútort készítesz? 🍳', prompt: 'Milyen prémium egyedi bútorkategóriákat készítesz?' }
+      { text: 'Színházi múlt? 🎭', prompt: 'Meséljen Tibor színházi díszletépítő múltjáról! Hogyan hat ez a munkáira?' },
+      { text: 'Ausztriában is? 🇦🇹', prompt: 'Vállal Tibor munkát Ausztriában is?' },
+      { text: 'Árajánlat menete? 📝', prompt: 'Hogyan kérhetek árajánlatot?' },
+      { text: 'Milyen bútort készít? 🍳', prompt: 'Milyen egyedi bútorokat készít Tibor?' }
     ]
   },
   de: {
@@ -31,7 +31,7 @@ const translations = {
     placeholder: 'Stellen Sie eine Frage...',
     typing: 'Cimbi schreibt...',
     close: 'Schließen',
-    welcome: 'Hallo! Ich bin der KI-Assistent von Czimber Tibor (Cimbi). Wie kann ich Ihnen heute helfen? Sie können nach meiner Theater-Schreiner Vergangenheit, Lieferungen nach Österreich, maßgefertigten Möbeln oder dem Ablauf für ein [Angebot anfordern](#quote) fragen!',
+    welcome: 'Hallo! Ich bin der Assistent der Website von Czimber Tibor (Cimbi). Fragen Sie gern nach seinen Arbeiten, seiner Zeit am Theater, maßgefertigten Möbeln, Aufträgen in Österreich oder dem Ablauf für ein [Angebot anfordern](#quote). Bitte geben Sie im Chat keine persönlichen Daten ein.',
     quickReplies: [
       { text: 'Theater-Vergangenheit? 🎭', prompt: 'Erzählen Sie mir von Ihrer Zeit beim Theater! Wie beeinflusst das die Qualität Ihrer Arbeit?' },
       { text: 'Lieferung nach Österreich? 🇦🇹', prompt: 'Wie läuft die Vermessung und Lieferung nach Österreich (z. B. Graz, Burgenland)?' },
@@ -45,7 +45,7 @@ const translations = {
     placeholder: 'Ask a question...',
     typing: 'Cimbi is typing...',
     close: 'Close',
-    welcome: 'Hello! I am Czimber Tibor\'s (Cimbi) AI assistant. How can I help you today? You can ask about my theatrical scenery building background, custom kitchen, bathroom, or hallway furniture, delivery to Austria, or the [Quote request](#quote) process!',
+    welcome: 'Hello! I am the assistant of Czimber Tibor\'s (Cimbi) website. Feel free to ask about his work, his theatre background, custom kitchen, bathroom or hallway furniture, work in Austria, or the [Quote request](#quote) process. Please do not enter personal data in the chat.',
     quickReplies: [
       { text: 'Theater background? 🎭', prompt: 'Tell me about your theater scenery building background! How does it affect your furniture quality?' },
       { text: 'Delivery to Austria? 🇦🇹', prompt: 'How does onsite measurement and delivery to Austria (e.g. Graz, Burgenland) work?' },
@@ -118,20 +118,18 @@ export default function AIAssistant() {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: updatedMessages }),
+        body: JSON.stringify({ messages: updatedMessages, locale }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch chat completion');
-      }
-
-      const data = await response.json();
-      const botReply = data.choices?.[0]?.message?.content || 'Sajnálom, hiba történt a válasz generálása során.';
+      const data = await response.json().catch(() => ({}));
+      // the server answers {reply} on success and a friendly {error} text otherwise
+      const botReply = response.ok && typeof data.reply === 'string' ? data.reply : typeof data.error === 'string' ? data.error : '';
+      if (!botReply) throw new Error(`chat ${response.status}`);
 
       setMessages((prev) => [...prev, { role: 'assistant', content: botReply }]);
     } catch (error) {
       console.error('Error sending message:', error);
-      let errorMsg = 'Hiba történt a küldés során. Kérlek próbáld újra!';
+      let errorMsg = 'Hiba történt a küldés során. Kérjük, próbálja újra, vagy hívja a +36 30 272 4460 számot.';
       if (locale === 'de') errorMsg = 'Fehler beim Senden. Bitte versuchen Sie es erneut!';
       if (locale === 'en') errorMsg = 'Error sending message. Please try again!';
       
@@ -214,7 +212,7 @@ export default function AIAssistant() {
                 <div className="relative">
                   <Image
                     src="/nkep.jpg"
-                    alt="Czimber Tibor portréja"
+                    alt="Czimber Tibor logója"
                     width={40}
                     height={40}
                     className="w-10 h-10 rounded-full object-cover border border-[var(--color-spotlight)]/40"

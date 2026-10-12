@@ -47,7 +47,9 @@
     "stat2_value": "0",
     "stat2_label": "tolerált hiba",
     "stat3_value": "100%",
-    "stat3_label": "elégedett ügyfél"
+    "stat3_label": "elégedett ügyfél",
+    "logo_alt": "Czimber Tibor asztalos logója",
+    "quote": "Minden milliméter egy döntés. Minden illesztés egy elköteleződés."
   },
   "services": {
     "motto": "\"A tervezéstől a kivitelezésig minden lépésnél a tökéletességre törekszem, hogy egyedi és időtálló megoldások szülessenek.\"",
@@ -80,7 +82,6 @@
     "step1_title": "Milyen munkát tervez?",
     "step2_title": "A projekt részletei",
     "step3_title": "Kapcsolati adatok",
-    "step_of": "/ 3. lépés",
     "type_kitchen": "Konyhabútor",
     "type_wardrobe": "Beépített szekrény / gardrób",
     "type_stairs": "Lépcső",
@@ -117,7 +118,10 @@
     "select_type": "Kérjük, válasszon legalább egy típust.",
     "location_label": "Helyszín",
     "timeline_label": "Mikor szeretné megkezdeni?",
-    "budget_label": "Tervezett büdzsé"
+    "budget_label": "Tervezett büdzsé",
+    "step_label": "{n} / 3. lépés",
+    "privacy_notice": "Az űrlapon megadott adatait (név, e-mail, telefonszám, a projekt leírása) kizárólag az ajánlatkérés megválaszolására használjuk. Részletek: <link>Adatkezelési tájékoztató</link>.",
+    "consent_label": "Elolvastam az <link>Adatkezelési tájékoztatót</link>, és hozzájárulok, hogy a megadott adataimat az ajánlatkérés megválaszolására kezeljék. *"
   },
   "contact": {
     "title": "Kapcsolat",
@@ -128,10 +132,30 @@
     "email": "czimbertibor2@gmail.com",
     "vat_label": "Közösségi adószám: ",
     "vat": "HU58746093",
-    "service_area": "Szolgáltatási terület: Zalaegerszeg és környéke, Ausztria"
+    "service_area": "Szolgáltatási terület: Zalaegerszeg és környéke, Ausztria",
+    "map_title": "Czimber Tibor e.v. helye a térképen",
+    "map_notice": "A térkép a Google szolgáltatása. Betöltéskor a Google adatot (pl. IP-címet) kap és sütiket állíthat be.",
+    "map_load": "Térkép betöltése",
+    "map_open": "Megnyitás a Google Térképen"
   },
   "footer": {
     "copyright": "Czimber Tibor EV – Minden jog fenntartva.",
-    "tagline": "Milliméteres precizitás. Színházi múlt. Asztalos jövő."
+    "tagline": "Milliméteres precizitás. Színházi múlt. Asztalos jövő.",
+    "privacy": "Adatkezelési tájékoztató",
+    "imprint": "Impresszum",
+    "terms": "ÁSZF"
+  },
+  "meta": {
+    "site": "Czimber Tibor Mesterasztalos",
+    "description": "Egyedi konyhabútor, beépített szekrény, gardrób, fürdőszoba- és előszobabútor, fa lépcső és bútor-összeszerelés Zalaegerszegen és környékén. Kérjen ajánlatot!",
+    "og_alt": "Egyedi konyhabútor Czimber Tibor műhelyéből"
+  },
+  "notFound": {
+    "title": "Ez az oldal nem található",
+    "text": "A keresett oldal nem létezik vagy elköltözött.",
+    "back": "Vissza a főoldalra"
+  },
+  "legal": {
+    "hu_only": ""
   }
 }

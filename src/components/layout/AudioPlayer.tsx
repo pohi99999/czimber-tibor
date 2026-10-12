@@ -14,6 +14,9 @@ export default function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  // Nothing from YouTube loads until the visitor presses the button (Lumen 3360 M1: the hidden
+  // autoplaying iframe cost ~2.2 MB on every mobile visit, and YouTube sets cookies).
+  const [requested, setRequested] = useState(false);
   const playerRef = useRef<any>(null);
   const userInteractedRef = useRef<boolean>(false);
 
@@ -22,13 +25,14 @@ export default function AudioPlayer() {
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !requested) return;
 
     const initYTPlayer = () => {
       if (window.YT && window.YT.Player) {
         try {
           playerRef.current = new window.YT.Player('ambient-yt-player', {
             videoId: 'VQB7j7DQdVI',
+            host: 'https://www.youtube-nocookie.com',
             playerVars: {
               autoplay: 1,
               mute: 1,
@@ -112,10 +116,15 @@ export default function AudioPlayer() {
         }
       }
     };
-  }, [mounted]);
+  }, [mounted, requested]);
 
   const toggleAudio = () => {
     userInteractedRef.current = true;
+    if (!requested) {
+      // first press: load the player; onReady unmutes it because the visitor asked for sound
+      setRequested(true);
+      return;
+    }
 
     if (!playerRef.current || typeof playerRef.current.unMute !== 'function') {
       setIsPlaying((prev) => !prev);
@@ -146,10 +155,12 @@ export default function AudioPlayer() {
 
   return (
     <>
-      {/* Hidden YouTube iframe container */}
-      <div className="aria-hidden hidden pointer-events-none w-0 h-0 overflow-hidden opacity-0" aria-hidden="true">
-        <div id="ambient-yt-player" />
-      </div>
+      {/* Hidden YouTube iframe container, filled only after the first press */}
+      {requested && (
+        <div className="aria-hidden hidden pointer-events-none w-0 h-0 overflow-hidden opacity-0" aria-hidden="true">
+          <div id="ambient-yt-player" />
+        </div>
+      )}
 
       {/* Floating Audio Control Widget */}
       <div className="fixed bottom-5 left-5 z-50 flex items-center group">

@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import { Link } from '@/i18n/routing';
 
 export default function Footer() {
   const t = useTranslations('footer');
@@ -24,6 +25,13 @@ export default function Footer() {
               <p className="text-[var(--color-oak-light)] text-xs italic mt-0.5">{t('tagline')}</p>
             </div>
           </div>
+
+          {/* Legal pages (Marveen 3362) */}
+          <nav aria-label="Jogi információk" className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+            <Link href="/adatvedelem" className="text-[var(--color-stone)] hover:text-white underline-offset-4 hover:underline">{t('privacy')}</Link>
+            <Link href="/impresszum" className="text-[var(--color-stone)] hover:text-white underline-offset-4 hover:underline">{t('imprint')}</Link>
+            <Link href="/aszf" className="text-[var(--color-stone)] hover:text-white underline-offset-4 hover:underline">{t('terms')}</Link>
+          </nav>
 
           {/* Social links */}
           <a

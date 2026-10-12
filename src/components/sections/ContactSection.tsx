@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import FadeIn from '@/components/ui/FadeIn';
+import ClickToLoadMap from '@/components/ui/ClickToLoadMap';
 
 export default function ContactSection() {
   const t = useTranslations('contact');
@@ -94,16 +95,7 @@ export default function ContactSection() {
             {/* Google Maps */}
             <FadeIn direction="left">
               <div className="rounded-2xl overflow-hidden shadow-2xl border border-[var(--color-walnut)]/30 h-[420px]">
-                <iframe
-                  src="https://maps.google.com/maps?q=Dukai%20Tak%C3%A1cs%20Judit%20u.%209%2C%208900%20Zalaegerszeg&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, filter: 'grayscale(30%) contrast(1.1)' }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Czimber Tibor EV location"
-                />
+                <ClickToLoadMap />
               </div>
             </FadeIn>
           </div>
