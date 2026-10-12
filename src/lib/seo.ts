@@ -22,3 +22,16 @@ export function alternatesFor(locale: string, path = '') {
 }
 
 export const ogLocale = (locale: string) => (locale === 'de' ? 'de_AT' : locale === 'en' ? 'en_US' : 'hu_HU');
+
+/**
+ * The legal pages have one Hungarian text on all three languages (Lumen 3375): the Hungarian URL is
+ * the canonical, the /de and /en copies are noindex, follow, and no hreflang points at them.
+ */
+export function legalMeta(locale: string, path: string) {
+  return {
+    alternates: { canonical: localeUrl('hu', path) },
+    ...(locale === 'hu' ? {} : { robots: { index: false, follow: true } }),
+  };
+}
+
+export const LEGAL_PATHS = ['/adatvedelem', '/impresszum', '/aszf'] as const;

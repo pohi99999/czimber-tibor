@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import LegalPage, { CONTROLLER, Missing } from '@/components/legal/LegalPage';
-import { alternatesFor, localeUrl } from '@/lib/seo';
+import { legalMeta } from '@/lib/seo';
 
 const TITLE = 'Adatkezelési tájékoztató';
 
 export async function generateMetadata(props: PageProps<'/[locale]/adatvedelem'>): Promise<Metadata> {
   const { locale } = await props.params;
-  return { title: TITLE, alternates: { ...alternatesFor(locale, '/adatvedelem'), canonical: localeUrl('hu', '/adatvedelem') } };
+  return { title: TITLE, ...legalMeta(locale, '/adatvedelem') };
 }
 
 // Processors and addresses as their own pages state them (read 2026-10-12): vercel.com/legal/privacy-policy,
