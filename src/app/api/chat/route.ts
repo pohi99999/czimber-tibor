@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
   if (wait) {
     return NextResponse.json({ reply: busyMessage(asLang((raw as { locale?: unknown })?.locale)) }, { status: 200, headers: { 'Retry-After': String(wait) } });
   }
-  const result = await chatReply(raw, process.env.GEMINI_API_KEY, (url, init) => fetch(url, init));
-  if (result.status !== 200) console.error(`chat status=${result.status}`);
+  const result = await chatReply(raw, process.env.ANTHROPIC_API_KEY, (url, init) => fetch(url, init), process.env.ANTHROPIC_MODEL);
+  // the reason only (ok, busy_429, claude_400, timeout, ...): never the question or the answer
+  console.log(`chat status=${result.status} reason=${result.reason}`);
   return NextResponse.json(result.body, { status: result.status, headers: { 'Cache-Control': 'no-store' } });
 }

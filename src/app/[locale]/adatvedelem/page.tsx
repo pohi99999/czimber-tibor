@@ -10,7 +10,8 @@ export async function generateMetadata(props: PageProps<'/[locale]/adatvedelem'>
 }
 
 // Processors and addresses as their own pages state them (read 2026-10-12): vercel.com/legal/privacy-policy,
-// resend.com/legal/privacy-policy, policies.google.com/privacy; supervisory authority: naih.hu.
+// resend.com/legal/privacy-policy, policies.google.com/privacy, anthropic.com/legal/privacy;
+// supervisory authority: naih.hu.
 export default async function PrivacyPage(props: PageProps<'/[locale]/adatvedelem'>) {
   const { locale } = await props.params;
   return (
@@ -53,8 +54,8 @@ export default async function PrivacyPage(props: PageProps<'/[locale]/adatvedele
       <h2>3. AI-asszisztens (chat)</h2>
       <ul>
         <li>
-          A chatbe írt kérdéseket és a beszélgetés előzményeit a válasz előállításához a Google Gemini szolgáltatásnak
-          továbbítjuk. A weboldal a beszélgetést nem tárolja; az ablak bezárásával vagy az oldal újratöltésével az előzmény törlődik.
+          A chatbe írt kérdéseket és a beszélgetés előzményeit a válasz előállításához az Anthropic Claude
+          mesterségesintelligencia-szolgáltatásának továbbítjuk. A weboldal a beszélgetést nem tárolja; az ablak bezárásával vagy az oldal újratöltésével az előzmény törlődik.
         </li>
         <li>Kérjük, a chatbe ne írjon személyes adatot (név, telefonszám, cím). Ajánlatot az űrlapon kérhet.</li>
         <li><strong>Jogalap:</strong> az Ön által kezdeményezett kérdés megválaszolása (GDPR 6. cikk (1) bekezdés f) pont, jogos érdek).</li>
@@ -90,7 +91,8 @@ export default async function PrivacyPage(props: PageProps<'/[locale]/adatvedele
           <tbody>
             <tr><td>Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, USA</td><td>tárhely, a weboldal kiszolgálása, szervernaplók</td></tr>
             <tr><td>Plus Five Five, Inc. (Resend), 2261 Market Street #5039, San Francisco, CA 94114, USA</td><td>az ajánlatkérő e-mail kézbesítése</td></tr>
-            <tr><td>Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Írország</td><td>Gemini (a chat válaszai), Gmail (a beérkező ajánlatkérések), Google Térkép és YouTube (csak kattintás után)</td></tr>
+            <tr><td>Anthropic Ireland, Limited, 6th Floor, South Bank House, Barrow Street, Dublin 4, D04 TR29, Írország</td><td>Claude (a chat válaszai)</td></tr>
+            <tr><td>Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Írország</td><td>Gmail (a beérkező ajánlatkérések), Google Térkép és YouTube (csak kattintás után)</td></tr>
           </tbody>
         </table>
       </div>
@@ -99,6 +101,7 @@ export default async function PrivacyPage(props: PageProps<'/[locale]/adatvedele
         is továbbítódhatnak. A továbbítás garanciáiról a szolgáltatók saját tájékoztatói szólnak:{' '}
         <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Vercel</a>,{' '}
         <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Resend</a>,{' '}
+        <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener noreferrer">Anthropic</a>,{' '}
         <a href="https://policies.google.com/privacy?hl=hu" target="_blank" rel="noopener noreferrer">Google</a>.
       </p>
 

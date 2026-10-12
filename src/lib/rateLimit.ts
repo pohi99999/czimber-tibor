@@ -1,4 +1,4 @@
-// Best-effort per-IP limit for the two public endpoints (chat: the free Gemini quota; quote form:
+// Best-effort per-IP limit for the two public endpoints (chat: the shared Claude credit; quote form:
 // the mailbox). The counter lives in the memory of one serverless instance, so it slows a script
 // down without being a hard guarantee.
 
