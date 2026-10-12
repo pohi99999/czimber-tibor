@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { type Metadata } from 'next';
+import { alternatesFor, localeUrl, ogLocale, OG_IMAGE } from '@/lib/seo';
 import HeroSection from '@/components/sections/HeroSection';
 import TheatreOriginStory from '@/components/sections/TheatreOriginStory';
 import ServicesSection from '@/components/sections/ServicesSection';
@@ -9,24 +10,29 @@ import ContactSection from '@/components/sections/ContactSection';
 
 export async function generateMetadata(props: PageProps<'/[locale]'>): Promise<Metadata> {
   const { locale } = await props.params;
-  const t = await getTranslations({ locale, namespace: 'hero' });
+  const hero = await getTranslations({ locale, namespace: 'hero' });
+  const meta = await getTranslations({ locale, namespace: 'meta' });
+  // one name in the title, the suffix in the page language (Lumen 3360 Kö3)
+  const title = `${hero('title')} ${hero('titleAccent')} | ${meta('site')}`;
+  const url = localeUrl(locale);
   return {
-    title: `Czimber Tibor EV – ${t('title')} ${t('titleAccent')}`,
-    description: t('subtitle'),
-    alternates: {
-      canonical: locale === 'hu' ? '/' : `/${locale}`,
-      languages: {
-        hu: '/',
-        de: '/de',
-        en: '/en',
-      },
-    },
+    title: { absolute: title },
+    description: meta('description'),
+    alternates: alternatesFor(locale),
     openGraph: {
       type: 'website',
-      locale: locale === 'hu' ? 'hu_HU' : locale === 'de' ? 'de_DE' : 'en_GB',
-      title: `Czimber Tibor EV – ${t('title')} ${t('titleAccent')}`,
-      description: t('subtitle'),
-      images: [{ url: '/nkep.jpg', width: 1200, height: 630 }],
+      url,
+      siteName: meta('site'),
+      locale: ogLocale(locale),
+      title,
+      description: meta('description'),
+      images: [{ ...OG_IMAGE, alt: meta('og_alt') }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: meta('description'),
+      images: [OG_IMAGE.url],
     },
   };
 }

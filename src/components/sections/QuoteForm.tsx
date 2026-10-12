@@ -1,8 +1,9 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import FadeIn from '@/components/ui/FadeIn';
+import { Link } from '@/i18n/routing';
 
 type ProjectType = 'kitchen' | 'wardrobe' | 'stairs' | 'interior' | 'assembly' | 'other';
 type Location = 'local' | 'other' | 'austria';
@@ -18,20 +19,6 @@ interface FormData {
   email: string;
   phone: string;
   description: string;
-}
-
-function scoreLeadSubmission(data: FormData): 'hot' | 'warm' | 'cold' {
-  let score = 0;
-  if (data.budget === 'over1500') score += 3;
-  if (data.budget === '500_1500') score += 2;
-  if (data.phone.trim()) score += 1;
-  if (data.description.trim().length > 100) score += 1;
-  if (data.location === 'austria') score += 2;
-  if (data.timeline === '1_3') score += 2;
-  if (data.timeline === '3_6') score += 1;
-  if (data.timeline === 'undecided') score -= 1;
-  if (data.budget === 'unknown') score -= 1;
-  return score >= 5 ? 'hot' : score >= 2 ? 'warm' : 'cold';
 }
 
 function ProgressBar({ step }: { step: number }) {
@@ -122,22 +109,30 @@ function RadioGroup({
 }
 
 function FieldInput({
+  id,
   label,
   type = 'text',
+  autoComplete,
   value,
   onChange,
   placeholder,
 }: {
+  id: string;
   label: string;
   type?: string;
+  autoComplete: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-[var(--color-birch)]/80 mb-1.5">{label}</label>
+      <label htmlFor={id} className="block text-sm font-medium text-[var(--color-birch)]/80 mb-1.5">{label}</label>
       <input
+        id={id}
+        name={id}
+        autoComplete={autoComplete}
+        required
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -150,7 +145,10 @@ function FieldInput({
 
 export default function QuoteForm() {
   const t = useTranslations('quote');
+  const locale = useLocale();
   const [step, setStep] = useState(1);
+  const [consent, setConsent] = useState(false);
+  const [website, setWebsite] = useState('');
   const [error, setError] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [form, setForm] = useState<FormData>({
@@ -214,15 +212,17 @@ export default function QuoteForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) return;
     setStatus('submitting');
-    const leadScore = scoreLeadSubmission(form);
     try {
       const res = await fetch('/api/ajanlat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, leadScore }),
+        body: JSON.stringify({ ...form, consent, locale, website }),
       });
-      if (!res.ok) throw new Error('Server error');
+      // success only when the server says the e-mail was accepted for delivery
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data?.ok !== true) throw new Error(`Server error ${res.status}`);
       setStatus('success');
     } catch {
       setStatus('error');
@@ -264,7 +264,7 @@ export default function QuoteForm() {
               {step === 1 && (
                 <div className="space-y-6">
                   <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-                    <span className="text-[var(--color-spotlight)] text-sm mr-2">1 {t('step_of')}</span>
+                    <span className="text-[var(--color-spotlight)] text-sm mr-2">{t('step_label', { n: 1 })}</span>
                     {t('step1_title')}
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -285,7 +285,7 @@ export default function QuoteForm() {
               {step === 2 && (
                 <div className="space-y-6">
                   <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-                    <span className="text-[var(--color-spotlight)] text-sm mr-2">2 {t('step_of')}</span>
+                    <span className="text-[var(--color-spotlight)] text-sm mr-2">{t('step_label', { n: 2 })}</span>
                     {t('step2_title')}
                   </h3>
                   <RadioGroup
@@ -314,16 +314,20 @@ export default function QuoteForm() {
               {step === 3 && (
                 <div className="space-y-5">
                   <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-display)' }}>
-                    <span className="text-[var(--color-spotlight)] text-sm mr-2">3 {t('step_of')}</span>
+                    <span className="text-[var(--color-spotlight)] text-sm mr-2">{t('step_label', { n: 3 })}</span>
                     {t('step3_title')}
                   </h3>
                   <div className="grid sm:grid-cols-2 gap-5">
                     <FieldInput
+                      id="quote-name"
+                      autoComplete="name"
                       label={t('name')}
                       value={form.name}
                       onChange={(v) => setForm((f) => ({ ...f, name: v }))}
                     />
                     <FieldInput
+                      id="quote-email"
+                      autoComplete="email"
                       label={t('email')}
                       type="email"
                       value={form.email}
@@ -331,16 +335,22 @@ export default function QuoteForm() {
                     />
                   </div>
                   <FieldInput
+                    id="quote-phone"
+                    autoComplete="tel"
                     label={t('phone')}
                     type="tel"
                     value={form.phone}
                     onChange={(v) => setForm((f) => ({ ...f, phone: v }))}
                   />
                   <div>
-                    <label className="block text-sm font-medium text-[var(--color-birch)]/80 mb-1.5">
+                    <label htmlFor="quote-description" className="block text-sm font-medium text-[var(--color-birch)]/80 mb-1.5">
                       {t('description')}
                     </label>
                     <textarea
+                      id="quote-description"
+                      name="quote-description"
+                      required
+                      minLength={50}
                       rows={5}
                       value={form.description}
                       onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
@@ -351,8 +361,38 @@ export default function QuoteForm() {
                       {form.description.length} / 50 min.
                     </p>
                   </div>
+                  {/* honeypot: hidden from people and screen readers, bots fill it */}
+                  <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+                    <label htmlFor="quote-website">Website</label>
+                    <input id="quote-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+                  </div>
+                  <p className="text-xs text-[var(--color-birch)]/70 leading-relaxed">
+                    {t.rich('privacy_notice', {
+                      link: (chunks) => (
+                        <Link href="/adatvedelem" className="text-[var(--color-spotlight)] underline hover:text-white">{chunks}</Link>
+                      ),
+                    })}
+                  </p>
+                  <label htmlFor="quote-consent" className="flex items-start gap-3 text-sm text-[var(--color-birch)]/90 cursor-pointer">
+                    <input
+                      id="quote-consent"
+                      name="consent"
+                      type="checkbox"
+                      required
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 h-5 w-5 flex-shrink-0 rounded border-[var(--color-walnut)] bg-transparent text-[var(--color-spotlight)] focus:ring-[var(--color-spotlight)]"
+                    />
+                    <span>
+                      {t.rich('consent_label', {
+                        link: (chunks) => (
+                          <Link href="/adatvedelem" className="text-[var(--color-spotlight)] underline hover:text-white">{chunks}</Link>
+                        ),
+                      })}
+                    </span>
+                  </label>
                   {status === 'error' && (
-                    <p className="text-red-400 text-sm">{t('error_text')}</p>
+                    <p className="text-red-400 text-sm" role="alert">{t('error_text')}</p>
                   )}
                 </div>
               )}
@@ -382,7 +422,7 @@ export default function QuoteForm() {
                 ) : (
                   <button
                     type="submit"
-                    disabled={status === 'submitting' || form.description.trim().length < 50}
+                    disabled={status === 'submitting' || form.description.trim().length < 50 || !consent}
                     className="px-8 py-3.5 min-h-[44px] bg-[var(--color-spotlight)] text-[var(--color-stage)] font-bold rounded-lg hover:bg-[var(--color-oak)] transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {status === 'submitting' ? t('submitting') : t('submit')}
