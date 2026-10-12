@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import LegalPage, { CONTROLLER } from '@/components/legal/LegalPage';
 import { Link } from '@/i18n/routing';
-import { alternatesFor, localeUrl } from '@/lib/seo';
+import { legalMeta } from '@/lib/seo';
 
 const TITLE = 'Általános szerződési feltételek (ÁSZF)';
 
 export async function generateMetadata(props: PageProps<'/[locale]/aszf'>): Promise<Metadata> {
   const { locale } = await props.params;
-  return { title: 'ÁSZF', alternates: { ...alternatesFor(locale, '/aszf'), canonical: localeUrl('hu', '/aszf') } };
+  return { title: 'ÁSZF', ...legalMeta(locale, '/aszf') };
 }
 
 export default async function TermsPage(props: PageProps<'/[locale]/aszf'>) {

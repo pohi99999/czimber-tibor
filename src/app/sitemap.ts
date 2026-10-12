@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { LEGAL_PATHS } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://czimber-tibor.vercel.app';
@@ -47,6 +48,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
       },
     },
+    // the Hungarian legal pages only: the /de and /en copies are the same text, noindex (Lumen 3375)
+    ...LEGAL_PATHS.map((path) => ({
+      url: `${baseUrl}${path}`,
+      lastModified: currentDate,
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    })),
   ];
 }
-

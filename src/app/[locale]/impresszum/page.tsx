@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import LegalPage, { CONTROLLER, Missing } from '@/components/legal/LegalPage';
 import { Link } from '@/i18n/routing';
-import { alternatesFor, localeUrl } from '@/lib/seo';
+import { legalMeta } from '@/lib/seo';
 
 const TITLE = 'Impresszum';
 
 export async function generateMetadata(props: PageProps<'/[locale]/impresszum'>): Promise<Metadata> {
   const { locale } = await props.params;
   // one Hungarian text for all languages: the canonical is the Hungarian page
-  return { title: TITLE, alternates: { ...alternatesFor(locale, '/impresszum'), canonical: localeUrl('hu', '/impresszum') } };
+  return { title: TITLE, ...legalMeta(locale, '/impresszum') };
 }
 
 export default async function ImprintPage(props: PageProps<'/[locale]/impresszum'>) {
