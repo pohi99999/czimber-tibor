@@ -53,7 +53,9 @@ type FetchFn = (url: string, init: { method: string; headers: Record<string, str
  * The client history -> Messages API turns. The conversation must open with the user and the
  * roles must alternate; the widget's history opens with the welcome bubble. Unknown roles (a
  * client-sent "system") and empty turns are dropped, same-role runs merged, only the last
- * MAX_TURNS kept, each cut to MAX_TURN_CHARS.
+ * MAX_TURNS kept, each cut to MAX_TURN_CHARS. The cut applies to a merged turn too (its tail): before the
+ * security audit (2026-10-15) a run of 500 user turns merged into one ~1 MB turn, so one request
+ * could bill hundreds of thousands of input tokens.
  */
 export function toMessages(raw: unknown): Turn[] {
   const list = Array.isArray(raw) ? raw : [];
@@ -65,7 +67,7 @@ export function toMessages(raw: unknown): Turn[] {
     const text = content.trim().slice(0, MAX_TURN_CHARS);
     if (!text) continue;
     const prev = turns[turns.length - 1];
-    if (prev && prev.role === role) prev.content = `${prev.content}\n\n${text}`;
+    if (prev && prev.role === role) prev.content = `${prev.content}\n\n${text}`.slice(-MAX_TURN_CHARS); // keep the newest text
     else turns.push({ role, content: text });
   }
   let recent = turns.slice(-MAX_TURNS);
