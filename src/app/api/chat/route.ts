@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { chatReply, asLang, busyMessage } from '@/lib/chat';
 import { createLimiter, clientKey } from '@/lib/rateLimit';
+import { isCrossSite } from '@/lib/origin';
 
 export const runtime = 'nodejs';
 
@@ -10,6 +11,7 @@ const limit = createLimiter(30);
 const siteLimit = createLimiter(300);
 
 export async function POST(request: NextRequest) {
+  if (isCrossSite(request.headers)) return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   let raw: unknown;
   try {
     raw = await request.json();
