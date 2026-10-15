@@ -5,6 +5,9 @@ import { createLimiter, clientKey } from '@/lib/rateLimit';
 export const runtime = 'nodejs';
 
 const limit = createLimiter(30);
+// site-wide ceiling per instance on top of the per-IP one (security audit 2026-10-15): bounds the
+// Claude bill when the requests come from many addresses; past it the visitor gets the busy text
+const siteLimit = createLimiter(300);
 
 export async function POST(request: NextRequest) {
   let raw: unknown;
@@ -13,7 +16,7 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
-  const wait = limit(clientKey(request.headers));
+  const wait = limit(clientKey(request.headers)) || siteLimit('site');
   if (wait) {
     return NextResponse.json({ reply: busyMessage(asLang((raw as { locale?: unknown })?.locale)) }, { status: 200, headers: { 'Retry-After': String(wait) } });
   }
