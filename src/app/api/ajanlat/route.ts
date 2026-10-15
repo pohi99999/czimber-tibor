@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { deliverLead } from '@/lib/lead';
 import { createLimiter, clientKey } from '@/lib/rateLimit';
+import { isCrossSite } from '@/lib/origin';
 
 export const runtime = 'nodejs';
 
@@ -9,6 +10,7 @@ const MAX_BODY = 20000;
 
 export async function POST(request: NextRequest) {
   const headers = { 'Cache-Control': 'no-store' };
+  if (isCrossSite(request.headers)) return NextResponse.json({ ok: false, error: 'forbidden' }, { status: 403, headers });
   const rawText = await request.text();
   if (rawText.length > MAX_BODY) return NextResponse.json({ ok: false, error: 'bad_body' }, { status: 400, headers });
   let raw: unknown;

@@ -129,3 +129,14 @@ test('an empty or assistant-only history is a 400 and calls nothing', async () =
     assert.equal(f.calls.length, 0);
   }
 });
+
+test('security audit 2026-10-15: a run of same-role turns cannot merge past MAX_TURN_CHARS (input-token amplification)', () => {
+  const flood = Array.from({ length: 500 }, () => ({ role: 'user', content: 'x'.repeat(2000) }));
+  const m = toMessages(flood);
+  assert.equal(m.length, 1);
+  assert.ok(m[0].content.length <= 2000);
+  const mixed = Array.from({ length: 400 }, (_, i) => ({ role: i % 50 === 49 ? 'assistant' : 'user', content: 'y'.repeat(2000) }));
+  mixed.push({ role: 'user', content: 'q' });
+  const total = toMessages(mixed).reduce((n, t) => n + t.content.length, 0);
+  assert.ok(total <= 10 * 2000, `total ${total}`);
+});
